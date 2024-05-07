@@ -34,7 +34,12 @@ app.get('/',(req,res,next)=>{
     res.send("hello world From testing")
 })
 
-app.get('/data1',async(req,res)=>{
+app.get('/data1',async(req,res)=>{ //test
+    const userData = await userModel.find()
+    res.json(userData)
+})
+
+app.get('/datas',async(req,res)=>{
     const userData = await userModel.find()
     res.json(userData)
 })

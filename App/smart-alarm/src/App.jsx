@@ -7,7 +7,7 @@ import Details from './Component/Details/Details'
 import { StateContext, StateProvider } from './Component/Context/AppContextAPI/StateProvider'
 import UserLocation from './ApiCalls/UserLocation'
 import Map2 from './Component/Maps/Map2'
-import axios from 'axios'
+import Recents from './Component/Recents/Recents'
 
 function App() {
   const [latitude,setLatitude] = useState(0);
@@ -32,7 +32,6 @@ function App() {
         const error = () => {
             console.log("error")
         }
-
         navigator.geolocation.getCurrentPosition(success,error);
     }
 
@@ -52,16 +51,17 @@ function App() {
   const handleTest = ()=>{
     fetch('http://localhost:5001/data1').then((res)=>res.json()).then((data)=>console.log(data[4].name))
   }
-
+  console.log(latitude,'=+=+',longitude)
   return (
     <>
     <StateProvider>
-        <Navbar/>   
+        <Navbar/>
         <Maps latitude={latitude} longitude={longitude}/>
         <Input setDisplayDetail={setDisplayDetail} setDisplayMap={setDisplayMap}/>
-        {displayMap ? <Map2 />:null}     
+        {displayMap ? <Map2 />:null}
         {displayDetail ? <Details latitude={latitude} longitude={longitude} mobile={mobile} radiDist={radiDist}/> : null}
         <UserLocation mobile={mobile} setRadiDist={setRadiDist}   setMobile={setMobile} />
+        <Recents setLatitude={setLatitude} setLongitude={setLongitude}/>
     </StateProvider>
     </>
   )

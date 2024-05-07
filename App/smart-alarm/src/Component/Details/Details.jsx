@@ -103,7 +103,8 @@ const Details = ({latitude,longitude,mobile,radiDist}) => {
     }
 
     const sendTextMessage = async()=>{
-     //toinsert twilo token
+      const TWILIO_ACCOUNT_SID = 'ACd579e358717ab8df2d520bd7c3287732'
+      const TWILIO_AUTH_TOKEN = 'd8ee1b24108285ec60e6709059b9cb84'
       const accountSid = TWILIO_ACCOUNT_SID;
       const authToken = TWILIO_AUTH_TOKEN;
       const client = require('twilio')(accountSid, authToken);

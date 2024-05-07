@@ -3,6 +3,7 @@ import { StateContext } from '../Context/AppContextAPI/StateProvider'
 
 const Maps = ({latitude,longitude}) => {
   const {search,destination,distance,estTime,setSearch,setDestination,setDistance,setEstTime,destLati,destLongi,setDestLati,setDestLongi,distanceBetweeen,setDistanceBetween} = useContext(StateContext)
+ 
   const handleRefreshMaps = ()=>{
     const map = document.getElementById('maps')
     map.src=`http://www.google.com/maps?q=${latitude},${longitude}&hl=es;&output=embed`
@@ -22,7 +23,6 @@ const Maps = ({latitude,longitude}) => {
      height="500"
      id='maps'
       >
-
      </iframe> 
      <button type="button"  className="btn btn-dark py-2 my-2 " onClick={handleRefreshMaps}>Refresh</button>
   </div>
