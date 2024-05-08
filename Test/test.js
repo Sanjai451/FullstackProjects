@@ -1,19 +1,19 @@
-const findMyState =() =>{
-    let latitude;
-    let longitude;
-    const success = (position) =>{
-        console.log(position)
-         latitude = position.latitude
-         longitude= position.longitude
-         console.log(position.longitude)
-         console.log(position.latitude)
-    }
+// const findMyState =() =>{
+//     let latitude;
+//     let longitude;
+//     const success = (position) =>{
+//         console.log(position)
+//          latitude = position.latitude
+//          longitude= position.longitude
+//          console.log(position.longitude)
+//          console.log(position.latitude)
+//     }
 
-    const error = () => {
-        console.log("error")
-    }
+//     const error = () => {
+//         console.log("error")
+//     }
 
-    navigator.geolocation.getCurrentPosition(success,error);
+//     navigator.geolocation.getCurrentPosition(success,error);
 
 //    var data =  fetch('https://api.openweathermap.org/geo/1.0/reverse?lat=13.054049&lon=80.072999&appid=1729e8ed8651f3e176e80b4e8b77cc7f');
 //      data =  response.json();
@@ -21,9 +21,9 @@ const findMyState =() =>{
 //     console.log(data[0].name)
 //     console.log(data[0].state)
 //     console.log(data[0].local_names.ta)
-}
+// }
 
-findMyState()
+// findMyState()
 // //ec426f0dbb847acef7b4ceb5b9a479c1
 
 // const findMyCoords = async()=>{
@@ -109,4 +109,19 @@ findMyState()
 //     navigator.geolocation.getCurrentPosition(success,error);
 // }
 // findMyState()
+// import twilo from 'twilio'
 console.log('helo')
+function makingcalls(){
+    const accountSid  = 'ACd579e358717ab8df2d520bd7c3287732'
+    const authToken = 'd8ee1b24108285ec60e6709059b9cb84'
+    const client = require('twilio')(accountSid, authToken);
+    client.calls
+      .create({
+         url: 'http://demo.twilio.com/docs/voice.xml',
+         to: '+916369417210',
+         from: '+12569738178'
+       })
+      .then(call => console.log(call.sid));
+    console.log("function called successsfullly")
+}
+makingcalls()

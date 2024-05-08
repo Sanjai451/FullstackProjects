@@ -26,8 +26,13 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
+import { StateContext } from '../Component/Context/AppContextAPI/StateProvider';
+import axios from 'axios';
 
-const UserLocation = ({mobile,setMobile,setRadiDist}) => {
+const UserLocation = ({mobile,setMobile,setRadiDist,latitude,longitude}) => {
+  
+  const {search,destination,distance,estTime,setSearch,setDestination,setDistance,setEstTime,destLati,destLongi,setDestLati,setDestLongi,distanceBetweeen,setDistanceBetween} = useContext(StateContext)
+  const [mobileToCall,setMobileToCall] = useState('+916369417210')
 
   const handleChangeMobile = async()=>{
     const { value: Number } = await Swal.fire({
@@ -53,10 +58,65 @@ const UserLocation = ({mobile,setMobile,setRadiDist}) => {
       Swal.fire(`Distance changed to : ${Number}`);
     }
   }
+  
+  function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1); 
+    var a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    return d;
+  }
+  function deg2rad(deg) {
+    return deg * (Math.PI/180)
+  }
+
+
+  const makeCalls = async()=>{
+       axios.post('http://localhost:6369/makecalls',{
+        mobile:mobileToCall
+       })
+      .then((res)=>res.json())
+      .then((res)=>console.log(res))
+  }
+
+
+  const getMobileNo = async()=>{
+    const { value: Number } = await Swal.fire({
+      title: "Mobile number",
+      input: "number",
+      inputLabel: "Your Mobile Number",
+      inputPlaceholder: "Enter Mobile number"
+    });
+    if (Number) {
+      setMobileToCall(Number)      
+      Swal.fire(`Entered Number: ${Number}`);
+    }
+  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const distBtnTwoPoints =  getDistanceFromLatLonInKm(latitude,longitude,destLati,destLongi);
+      console.log("distance ",distBtnTwoPoints)
+      if(distBtnTwoPoints > 5 && distBtnTwoPoints < 50){
+        console.log("calling mobile")
+        makeCalls()
+      }
+    }, 1000*60);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className='container '>
-      <button className='btn btn-primary col-4 my-4 btn-sm rounded-3 mx-1'  onClick={handleChangeMobile}>Change Mobile Number</button>
-      <button className='btn btn-primary col-4 my-4 btn-sm rounded-3 mx-1'  onClick={handleRadiusChange}>Change Distance</button>
+      <button className='btn btn-primary  my-4 btn-sm  mx-1'  onClick={handleChangeMobile}>Change Mobile Number</button>
+      <button className='btn btn-primary  my-4 btn-sm  mx-1'  onClick={handleRadiusChange}>Change Distance</button>
+      <button className='btn btn-primary my-3 btn-sm mx-1' onClick={getMobileNo} > Add a Number to Call</button>
+      <button className='btn btn-primary my-3 btn-sm mx-1' onClick={makeCalls} > Test</button>
     </div>
   )
 }

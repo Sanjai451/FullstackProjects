@@ -44,7 +44,7 @@ const Details = ({latitude,longitude,mobile,radiDist}) => {
         const distanceBetweenLocationAndDestination = getDistanceFromLatLonInKm(latitude,longitude,destLati,destLongi) 
             console.log("lowww distance")
             console.log('sending message')
-            sendTextMessage()
+            //sendTextMessage()
             console.log('message send successfully')
             Toast.fire({
                 icon: "success",
@@ -53,6 +53,9 @@ const Details = ({latitude,longitude,mobile,radiDist}) => {
             setDisplayStopButton(true) 
             audio.pause()
             playAudio()
+        }
+        if(distanceBetweenLocationAndDestination < 10){
+          sendTextMessage()
         }
        }
     // setInterval(()=>{

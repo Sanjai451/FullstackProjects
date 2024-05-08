@@ -60,7 +60,7 @@ function App() {
         <Input setDisplayDetail={setDisplayDetail} setDisplayMap={setDisplayMap}/>
         {displayMap ? <Map2 />:null}
         {displayDetail ? <Details latitude={latitude} longitude={longitude} mobile={mobile} radiDist={radiDist}/> : null}
-        <UserLocation mobile={mobile} setRadiDist={setRadiDist}   setMobile={setMobile} />
+        <UserLocation mobile={mobile} setRadiDist={setRadiDist}   setMobile={setMobile} latitude={latitude} longitude={longitude} />
         <Recents setLatitude={setLatitude} setLongitude={setLongitude}/>
     </StateProvider>
     </>
