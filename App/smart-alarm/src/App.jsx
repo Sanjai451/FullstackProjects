@@ -8,6 +8,7 @@ import { StateContext, StateProvider } from './Component/Context/AppContextAPI/S
 import UserLocation from './ApiCalls/UserLocation'
 import Map2 from './Component/Maps/Map2'
 import Recents from './Component/Recents/Recents'
+import GoogleMapComponent from './Component/Maps/GoogleMapComponent'
 
 function App() {
   const [latitude,setLatitude] = useState(0);
@@ -16,8 +17,8 @@ function App() {
   const [mobile,setMobile] = useState(+916369417210)
   const [displayMap,setDisplayMap] = useState(false)
   const [displayDetail,setDisplayDetail] = useState(false)
-  const [radiDist,setRadiDist] = useState(100)
-
+  const [radiDist,setRadiDist] = useState(5)
+  const [distTbetweenTwoPoints,setDistanceBetweenTwoPoints] = useState(0);
     const findDetails = async()=>{
         const success = (position) =>{
                     console.log(position)
@@ -59,8 +60,8 @@ function App() {
         <Maps latitude={latitude} longitude={longitude}/>
         <Input setDisplayDetail={setDisplayDetail} setDisplayMap={setDisplayMap}/>
         {displayMap ? <Map2 />:null}
-        {displayDetail ? <Details latitude={latitude} longitude={longitude} mobile={mobile} radiDist={radiDist}/> : null}
-        <UserLocation mobile={mobile} setRadiDist={setRadiDist}   setMobile={setMobile} latitude={latitude} longitude={longitude} />
+        {displayDetail ? <Details latitude={latitude} longitude={longitude} mobile={mobile} radiDist={radiDist} setDistanceBetweenTwoPoints={setDistanceBetweenTwoPoints}/> : null}
+        <UserLocation mobile={mobile} setRadiDist={setRadiDist}   setMobile={setMobile} latitude={latitude} longitude={longitude} distTbetweenTwoPoints={distTbetweenTwoPoints}/>
         <Recents setLatitude={setLatitude} setLongitude={setLongitude}/>
     </StateProvider>
     </>

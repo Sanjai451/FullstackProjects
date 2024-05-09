@@ -3,7 +3,7 @@ import { StateContext } from '../Context/AppContextAPI/StateProvider';
 import Song from './Song.mp3'
 import Swal from 'sweetalert2'
 import axios from 'axios'
-const Details = ({latitude,longitude,mobile,radiDist}) => {
+const Details = ({latitude,longitude,mobile,radiDist,setDistanceBetweenTwoPoints}) => {
 
       const [displayStopButton,setDisplayStopButton] = useState(false)
 
@@ -36,7 +36,7 @@ const Details = ({latitude,longitude,mobile,radiDist}) => {
       const distanceBetweenLocationAndDestination = getDistanceFromLatLonInKm(latitude,longitude,destLati,destLongi) 
       console.log("distance: ",getDistanceFromLatLonInKm(latitude,longitude,destLati,destLongi));
       setDistanceBetween(distanceBetweenLocationAndDestination)
-
+      setDistanceBetweenTwoPoints(distanceBetweenLocationAndDestination)
     const notifierFunction= async()=>{
       
       console.log("distance changed to: ",getDistanceFromLatLonInKm(latitude,longitude,destLati,destLongi));

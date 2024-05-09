@@ -29,7 +29,7 @@ import Swal from 'sweetalert2';
 import { StateContext } from '../Component/Context/AppContextAPI/StateProvider';
 import axios from 'axios';
 
-const UserLocation = ({mobile,setMobile,setRadiDist,latitude,longitude}) => {
+const UserLocation = ({mobile,setMobile,setRadiDist,latitude,longitude,distTbetweenTwoPoints}) => {
   
   const {search,destination,distance,estTime,setSearch,setDestination,setDistance,setEstTime,destLati,destLongi,setDestLati,setDestLongi,distanceBetweeen,setDistanceBetween} = useContext(StateContext)
   const [mobileToCall,setMobileToCall] = useState('+916369417210')
@@ -59,22 +59,22 @@ const UserLocation = ({mobile,setMobile,setRadiDist,latitude,longitude}) => {
     }
   }
   
-  function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    var R = 6371; // Radius of the earth in km
-    var dLat = deg2rad(lat2-lat1);  // deg2rad below
-    var dLon = deg2rad(lon2-lon1); 
-    var a = 
-      Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-      Math.sin(dLon/2) * Math.sin(dLon/2)
-      ; 
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-    var d = R * c; // Distance in km
-    return d;
-  }
-  function deg2rad(deg) {
-    return deg * (Math.PI/180)
-  }
+  // function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  //   var R = 6371; // Radius of the earth in km
+  //   var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  //   var dLon = deg2rad(lon2-lon1); 
+  //   var a = 
+  //     Math.sin(dLat/2) * Math.sin(dLat/2) +
+  //     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+  //     Math.sin(dLon/2) * Math.sin(dLon/2)
+  //     ; 
+  //   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  //   var d = R * c; // Distance in km
+  //   return d;
+  // }
+  // function deg2rad(deg) {
+  //   return deg * (Math.PI/180)
+  // }
 
 
   const makeCalls = async()=>{
@@ -100,9 +100,8 @@ const UserLocation = ({mobile,setMobile,setRadiDist,latitude,longitude}) => {
   }
   useEffect(() => {
     const interval = setInterval(() => {
-      const distBtnTwoPoints =  getDistanceFromLatLonInKm(latitude,longitude,destLati,destLongi);
-      console.log("distance ",distBtnTwoPoints)
-      if(distBtnTwoPoints > 5 && distBtnTwoPoints < 50){
+      console.log("distance ",distTbetweenTwoPoints)
+      if(distTbetweenTwoPoints > 5 && distTbetweenTwoPoints < 50){
         console.log("calling mobile")
         makeCalls()
       }
@@ -110,6 +109,13 @@ const UserLocation = ({mobile,setMobile,setRadiDist,latitude,longitude}) => {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(()=>{
+    if(distTbetweenTwoPoints > 5 && distTbetweenTwoPoints < 50){
+      console.log("calling mobile")
+      makeCalls()
+    }
+  },[distTbetweenTwoPoints])
 
   return (
     <div className='container '>
