@@ -17,7 +17,7 @@ function App() {
   const [mobile,setMobile] = useState(+916369417210)
   const [displayMap,setDisplayMap] = useState(false)
   const [displayDetail,setDisplayDetail] = useState(false)
-  const [radiDist,setRadiDist] = useState(5)
+  const [radiDist,setRadiDist] = useState(50)
   const [distTbetweenTwoPoints,setDistanceBetweenTwoPoints] = useState(0);
     const findDetails = async()=>{
         const success = (position) =>{

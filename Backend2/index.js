@@ -23,6 +23,17 @@ function makingcalls(x){
       .then(call => console.log(call.sid));
     console.log("function called successsfullly")
 }
+function makemessages(mobile){
+      const accountSid = 'ACd579e358717ab8df2d520bd7c3287732'
+      const authToken = 'd8ee1b24108285ec60e6709059b9cb84'
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+      .create({
+      from: '+12569738178',
+      to: `+${mobile}`,
+      body: `You are about to reach the Destination `,
+      }).then(message => console.log(message));
+    }
 
 app.get('/makecalls',(req,res)=>{
     makingcalls()
@@ -32,6 +43,11 @@ app.get('/makecalls',(req,res)=>{
 app.post('/makecalls',(req,res)=>{
     const {mobile} = req.body
     makingcalls(mobile)
+    res.send(mobile)
+})
+app.post('/makemsg',(req,res)=>{
+    const {mobile} = req.body
+    makemessages(mobile)
     res.send(mobile)
 })
  

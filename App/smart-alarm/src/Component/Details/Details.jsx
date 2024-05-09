@@ -43,9 +43,9 @@ const Details = ({latitude,longitude,mobile,radiDist,setDistanceBetweenTwoPoints
       if(distanceBetweenLocationAndDestination < radiDist){
         const distanceBetweenLocationAndDestination = getDistanceFromLatLonInKm(latitude,longitude,destLati,destLongi) 
             console.log("lowww distance")
-            console.log('sending message')
+            // console.log('sending message')
             //sendTextMessage()
-            console.log('message send successfully')
+            // console.log('message send successfully')
             Toast.fire({
                 icon: "success",
                 title: "Location reached"
@@ -54,8 +54,10 @@ const Details = ({latitude,longitude,mobile,radiDist,setDistanceBetweenTwoPoints
             audio.pause()
             playAudio()
         }
-        if(distanceBetweenLocationAndDestination < 10){
-          sendTextMessage()
+      if(distanceBetweenLocationAndDestination < radiDist){
+            console.log('sending message')
+            sendTextMessage()
+            console.log('message send successfully')
         }
        }
     // setInterval(()=>{
@@ -106,17 +108,22 @@ const Details = ({latitude,longitude,mobile,radiDist,setDistanceBetweenTwoPoints
     }
 
     const sendTextMessage = async()=>{
-      const TWILIO_ACCOUNT_SID = 'ACd579e358717ab8df2d520bd7c3287732'
-      const TWILIO_AUTH_TOKEN = 'd8ee1b24108285ec60e6709059b9cb84'
-      const accountSid = TWILIO_ACCOUNT_SID;
-      const authToken = TWILIO_AUTH_TOKEN;
-      const client = require('twilio')(accountSid, authToken);
-      client.messages
-      .create({
-      from: '+12569738178',
-      to: `${mobile}`,
-      body: `You are about to reach the Destinatio ${search}. The distance is ${distanceBetweeen} `,
-      }).then(message => console.log(message.sid));
+      // const TWILIO_ACCOUNT_SID = 'ACd579e358717ab8df2d520bd7c3287732'
+      // const TWILIO_AUTH_TOKEN = 'd8ee1b24108285ec60e6709059b9cb84'
+      // const accountSid = TWILIO_ACCOUNT_SID;
+      // const authToken = TWILIO_AUTH_TOKEN;
+      // const client = require('twilio')(accountSid, authToken);
+      // client.messages
+      // .create({
+      // from: '+12569738178',
+      // to: `${mobile}`,
+      // body: `You are about to reach the Destinatio ${search}. The distance is ${distanceBetweeen} `,
+      // }).then(message => console.log(message.sid));
+      axios.post('http://localhost:6369/makemsg',{
+        mobile:mobile
+       })
+      .then((res)=>res.json())
+      .then((res)=>console.log(res))
     }
 
     console.log(destLati,'=dest=',destLongi)
